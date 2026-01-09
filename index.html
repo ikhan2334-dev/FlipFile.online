@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipFile - Free, Fast, Secure & Private PDF Tools</title>
+    <meta name="description" content="The swift shift for your secure files. Free PDF conversion, compression, unlocking and color extraction tools.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Alata&family=Averia+Serif+Libre:wght@300;400;700&family=Aldrich&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Translate -->
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <style>
+        :root {
+            --primary-red: #FF3131;
+            --primary-blue: #27D3F5;
+            --primary-green: #6CF527;
+            --accent-orange: #F08000;
+            --accent-gold: #FFD700;
+            --light-bg: #F8F9FA;
+            --dark-text: #333333;
+            --white: #FFFFFF;
+            --moonlight-white: #F5F7FA;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Alata', sans-serif;
+            color: var(--dark-text);
+            background-color: var(--moonlight-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Saira Stencil One', cursive;
+            font-weight: normal;
+        }
+
+        .codex-font {
+            font-family: 'Averia Serif Libre', cursive;
+        }
+
+        .aldrich-font {
+            font-family: 'Aldrich', sans-serif;
+        }
+
+        /* Header Styles */
+        .top-header {
+            background-color: var(--primary-green);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-blue), transparent 70%);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--white);
+        }
+
+        .logo-text {
+            font-family: 'Saira Stencil One', cursive;
+            font-size: 28px;
+        }
+
+        .logo-flip {
+            color: var(--primary-red);
+        }
+
+        .logo-file {
+            color: var(--primary-blue);
+        }
+
+        .slogan {
+            font-size: 12px;
+            margin-top: -5px;
+            font-family: 'Alata', sans-serif;
+        }
+
+        .smart-flip {
+            color: var(--primary-blue);
+        }
+
+        .secure-grip {
+            color: var(--primary-red);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-btn {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: none;
+            font-family: 'Alata', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn {
+            background-color: var(--accent-gold);
+            color: var(--white);
+            border: 1px solid var(--accent-gold);
+        }
+
+        .login-btn:hover {
+            background-color: #e6c200;
+            transform: translateY(-2px);
+        }
+
+        .language-btn {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .language-btn:hover {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        /* All Categories Button */
+        .categories-container {
+            width: 100%;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .categories-btn {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: 2px solid var(--white);
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .categories-btn:hover {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(39, 211, 245, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: var(--white);
+            min-width: 250px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            z-index: 1;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .categories-container:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            color: var(--dark-text);
+            text-decoration: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--light-bg);
+        }
+
+        .dropdown-icon {
+            font-size: 20px;
+        }
+
+        .icon-converter { color: #FF6B6B; }
+        .icon-compress { color: #4ECDC4; }
+        .icon-unlock { color: #FFD166; }
+        .icon-extractor { color: #06D6A0; }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--moonlight-white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-title {
+            color: var(--accent-orange);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        .hero-subtitle {
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .lock-icon {
+            color: var(--accent-gold);
+        }
+
+        /* Drag and Drop Zone */
+        .drop-zone-container {
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .drop-zone {
+            border: 3px dashed var(--primary-blue);
+            border-radius: 20px;
+            padding: 50px 20px;
+            background-color: var(--white);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .drop-zone.active {
+            border-color: var(--primary-green);
+            background-color: rgba(108, 245, 39, 0.05);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(108, 245, 39, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(108, 245, 39, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(108, 245, 39, 0); }
+        }
+
+        .upload-icon {
+            font-size: 70px;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .drop-zone h3 {
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        .file-types {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .file-type-badge {
+            background-color: var(--light-bg);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .select-file-btn {
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .select-file-btn:hover {
+            background-color: var(--primary-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(39, 211, 245, 0.3);
+        }
+
+        /* Monetization Section */
+        .monetization-section {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 20px;
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .ad-placeholder {
+            background-color: var(--light-bg);
+            border: 1px dashed #ccc;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .donation-box {
+            background: linear-gradient(135deg, #FFD700, #FFEC8B);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 40px 20px;
+            background-color: var(--accent-orange);
+            color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tool-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: var(--dark-text);
+            transition: transform 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tool-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h3 {
+            margin-bottom: 15px;
+            color: var(--accent-orange);
+        }
+
+        /* SEO Section */
+        .seo-section {
+            padding: 60px 20px;
+            background-color: var(--white);
+        }
+
+        .seo-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .seo-card {
+            background-color: var(--light-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: var(--white);
+            padding: 40px 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .top-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .header-controls {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .header-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+            
+            .categories-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        /* Google Translate */
+        #google_translate_element {
+            display: inline-block;
+        }
+
+        .goog-te-banner-frame {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+
+        .goog-te-gadget .goog-te-combo {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 2px solid var(--primary-blue);
+            background-color: var(--white);
+            color: var(--primary-blue);
+            font-family: 'Alata', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="top-header">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fas fa-file-pdf"></i>
+            </div>
+            <div>
+                <div class="logo-text">
+                    <span class="logo-flip">Flip</span><span class="logo-file">File</span>
+                </div>
+                <div class="slogan">
+                    <span class="smart-flip">Smart Flip.</span> <span class="secure-grip">Secure Grip.</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-controls">
+            <button class="header-btn login-btn">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <div id="google_translate_element"></div>
+        </div>
+        
+        <div class="categories-container">
+            <button class="header-btn categories-btn">
+                <i class="fas fa-th"></i> All Categories
+            </button>
+            <div class="dropdown-content">
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-exchange-alt dropdown-icon icon-converter"></i>
+                    <div>
+                        <h4>Converter</h4>
+                        <p>Convert between PDF, Word, Excel, Images</p>
+                    </div>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-compress-alt dropdown-icon icon-compress"></i>
+                    <div>
+                        <h4>Compress</h4>
+                        <p>Reduce PDF size without quality loss</p>
+                    </div>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-lock dropdown-icon icon-unlock"></i>
+                    <div>
+                        <h4>PDF Unlock/Lock</h4>
+                        <p>Secure your PDFs with passwords</p>
+                    </div>
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-palette dropdown-icon icon-extractor"></i>
+                    <div>
+                        <h4>Color Extractor</h4>
+                        <p>Extract colors from images and documents</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Free, Fast, Secure & Private PDF Tools Conversions!</h1>
+        
+        <div class="hero-subtitle codex-font">
+            <i class="fas fa-lock lock-icon"></i>
+            Files are deleted instantly after flipping!
+        </div>
+        
+        <!-- Search Bar -->
+        <div style="max-width: 600px; margin: 0 auto 40px;">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" placeholder="Search for tools..." style="flex: 1; padding: 15px; border: 2px solid var(--primary-blue); border-radius: 25px; font-size: 16px;">
+                <button style="background-color: var(--primary-green); color: white; border: 2px solid var(--primary-blue); border-radius: 25px; padding: 0 25px; cursor: pointer;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Drag and Drop Zone -->
+        <div class="drop-zone-container">
+            <div class="drop-zone" id="dropZone">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>Drag & Drop Your Files Here</h3>
+                <p>or click the button below to select files</p>
+                
+                <div class="file-types">
+                    <div class="file-type-badge"><i class="fas fa-file-pdf" style="color: #FF3131;"></i> PDF</div>
+                    <div class="file-type-badge"><i class="fas fa-file-image" style="color: #27D3F5;"></i> JPG/PNG</div>
+                    <div class="file-type-badge"><i class="fas fa-file-word" style="color: #2B579A;"></i> Word</div>
+                    <div class="file-type-badge"><i class="fas fa-file-excel" style="color: #217346;"></i> Excel</div>
+                    <div class="file-type-badge"><i class="fas fa-file-powerpoint" style="color: #D24726;"></i> PowerPoint</div>
+                </div>
+                
+                <button class="select-file-btn" id="selectFileBtn">
+                    <i class="fas fa-folder-open"></i> Select File
+                </button>
+                <input type="file" id="fileInput" style="display: none;">
+            </div>
+        </div>
+        
+        <!-- File Processing Info -->
+        <div id="fileInfo" style="display: none; max-width: 600px; margin: 20px auto; padding: 15px; background-color: var(--white); border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <h3 style="color: var(--primary-blue); margin-bottom: 10px;">Processing File: <span id="fileName"></span></h3>
+            <div style="height: 10px; background-color: #eee; border-radius: 5px; overflow: hidden;">
+                <div id="progressBar" style="height: 100%; width: 0%; background-color: var(--primary-green); transition: width 0.5s;"></div>
+            </div>
+            <p id="progressText" style="margin-top: 10px; text-align: center;">Starting processing...</p>
+        </div>
+    </section>
+
+    <!-- Monetization Section -->
+    <section class="monetization-section">
+        <h3 style="color: var(--primary-blue); text-align: center; margin-bottom: 20px;">Support Our Service</h3>
+        
+        <div class="ad-placeholder">
+            <p>Google AdSense Advertisement</p>
+            <p style="font-size: 14px; color: #666; margin-top: 10px;">(Ad will display here during file processing)</p>
+        </div>
+        
+        <div class="donation-box">
+            <h4 style="color: #333; margin-bottom: 15px;">Support Cancer Research</h4>
+            <p style="color: #333; margin-bottom: 15px;">After processing 7 documents, consider donating to Cancer Research (optional)</p>
+            <button style="background-color: #333; color: white; border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer; font-size: 16px;">
+                Donate £1+ to Cancer Research
+            </button>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">Minimum donation: £1 (completely optional)</p>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section class="tools-section">
+        <h2 class="section-title">Our Free Tools</h2>
+        
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon icon-converter">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <h3>PDF Converter</h3>
+                <p>Convert PDF files to Word, Excel, PowerPoint, Images and vice versa. Supports multiple formats including JPG, PNG, SVG, TIFF.</p>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon icon-compress">
+                    <i class="fas fa-compress-alt"></i>
+                </div>
+                <h3>PDF Compressor</h3>
+                <p>Reduce PDF file size without losing quality. Optimize your documents for sharing and storage while maintaining readability.</p>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon icon-unlock">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>PDF Unlock/Lock</h3>
+                <p>Remove password protection from PDFs or add encryption to secure your documents. Advanced AES-256 encryption.</p>
+            </div>
+            
+            <div class="tool-card">
+                <div class="tool-icon icon-extractor">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>Color Extractor</h3>
+                <p>Extract color palettes from images and documents. Get HEX, RGB, and CMYK values for perfect color matching.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Section -->
+    <section class="seo-section">
+        <div class="seo-content">
+            <h2 style="color: var(--accent-orange); text-align: center; margin-bottom: 20px;">Optimize Your Documents</h2>
+            
+            <div class="seo-card">
+                <h3 style="color: var(--primary-blue); margin-bottom: 15px;">Reduce PDF File Size Without Losing Quality</h3>
+                <p>Our advanced compression algorithm ensures your PDF files are optimized for sharing and storage while maintaining the highest quality. Whether you need to email a large document or save storage space, our tool reduces file size by up to 80% without visible quality loss.</p>
+                <p style="margin-top: 15px;">Benefits of PDF compression:</p>
+                <ul style="margin-top: 10px; padding-left: 20px;">
+                    <li>Faster upload and download times</li>
+                    <li>Reduced storage requirements</li>
+                    <li>Easier email attachments</li>
+                    <li>Improved website loading speeds</li>
+                    <li>Maintains text and image quality</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-envelope"></i> Email: cyview4u@gmail.com</p>
+                <p><i class="fas fa-globe"></i> Website: www.flipfile.online</p>
+                <p style="margin-top: 15px; font-style: italic;">"The swift shift for your secure files."</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Data Protection</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Features</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-shield-alt" style="color: var(--primary-blue);"></i> 100% Secure</li>
+                    <li><i class="fas fa-bolt" style="color: var(--primary-green);"></i> Fast Processing</li>
+                    <li><i class="fas fa-user-secret" style="color: var(--accent-gold);"></i> Complete Privacy</li>
+                    <li><i class="fas fa-hand-holding-heart" style="color: #FF6B6B;"></i> Free Forever</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 FlipFile. All rights reserved. All tools are completely free to use.</p>
+            <p style="margin-top: 5px;">Files are automatically deleted after processing. No data is stored without your consent.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Google Translate Integration
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,fr,es,de,ar,ur,hi',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        // Drag and Drop Functionality
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const selectFileBtn = document.getElementById('selectFileBtn');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+
+        // Highlight drop zone when dragging over
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.add('active');
+        }
+
+        function unhighlight(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('active');
+        }
+
+        // Handle dropped files
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        // Handle file selection via button
+        selectFileBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+
+        // Process files
+        function handleFiles(files) {
+            if (files.length === 0) return;
+            
+            const file = files[0];
+            const fileType = file.type;
+            const fileSize = (file.size / (1024 * 1024)).toFixed(2); // Convert to MB
+            
+            // Show file info and processing
+            fileName.textContent = file.name;
+            fileInfo.style.display = 'block';
+            
+            // Simulate file processing with progress
+            simulateFileProcessing(fileType, fileSize);
+            
+            // Simulate ad display during processing
+            showAdDuringProcessing();
+        }
+
+        function simulateFileProcessing(fileType, fileSize) {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                
+                if (progress <= 30) {
+                    progressText.textContent = 'Analyzing file...';
+                } else if (progress <= 60) {
+                    progressText.textContent = 'Processing document...';
+                } else if (progress <= 90) {
+                    progressText.textContent = 'Optimizing for security...';
+                } else {
+                    progressText.textContent = 'Finalizing...';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    progressText.textContent = 'Processing complete! Your file is ready for download.';
+                    
+                    // Simulate file download after 1 second
+                    setTimeout(() => {
+                        alert(`Your ${fileType} file (${fileSize} MB) has been processed successfully!\n\nFiles are automatically deleted after processing to ensure your privacy.`);
+                        resetFileProcessing();
+                    }, 1000);
+                }
+            }, 300);
+        }
+
+        function showAdDuringProcessing() {
+            // In a real implementation, this would show Google AdSense ads
+            console.log('Ad would be displayed during processing');
+        }
+
+        function resetFileProcessing() {
+            setTimeout(() => {
+                fileInfo.style.display = 'none';
+                progressBar.style.width = '0%';
+                fileInput.value = '';
+            }, 3000);
+        }
+
+        // Language selector enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add language options to the custom language selector
+            const languageBtn = document.querySelector('.language-btn');
+            if (languageBtn) {
+                languageBtn.addEventListener('click', function() {
+                    // Trigger Google Translate dropdown
+                    const googleTranslateSelect = document.querySelector('.goog-te-combo');
+                    if (googleTranslateSelect) {
+                        googleTranslateSelect.click();
+                    }
+                });
+            }
+            
+            // Add animation to tool cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe tool cards
+            document.querySelectorAll('.tool-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+
+        // Performance optimization
+        window.addEventListener('load', function() {
+            // Lazy loading simulation
+            console.log('Page fully loaded. CSS/JS minified and assets delivered via CDN.');
+            
+            // Set up service worker for offline functionality (simulated)
+            if ('serviceWorker' in navigator) {
+                console.log('Service Worker would be registered here for offline functionality.');
+            }
+        });
+    </script>
+</body>
+</html>
