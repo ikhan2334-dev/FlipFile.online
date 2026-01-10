@@ -1,0 +1,67 @@
+{
+  "name": "FlipFile",
+  "short_name": "FlipFile",
+  "description": "Free, Fast, Secure & Private PDF Tools Conversions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F7FA",
+  "theme_color": "#27D3F5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Compress PDF",
+      "short_name": "Compress",
+      "description": "Reduce PDF file size",
+      "url": "/?tool=compress"
+    },
+    {
+      "name": "Convert PDF",
+      "short_name": "Convert",
+      "description": "Convert files to/from PDF",
+      "url": "/?tool=convert"
+    }
+  ]
+}
