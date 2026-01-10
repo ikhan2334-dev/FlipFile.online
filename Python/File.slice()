@@ -1,0 +1,8 @@
+const chunkSize = 1024 * 1024; // 1MB chunks
+let offset = 0;
+
+while (offset < file.size) {
+  const chunk = file.slice(offset, offset + chunkSize);
+  // Process chunk
+  offset += chunkSize;
+}
